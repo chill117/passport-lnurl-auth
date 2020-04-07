@@ -1,0 +1,46 @@
+{
+  "name": "passport-lnurl-auth",
+  "version": "1.0.0",
+  "description": "Passport strategy that uses lnurl-auth",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chill117/passport-lnurl-auth.git"
+  },
+  "keywords": [
+    "passport",
+    "strategy",
+    "lnurl-auth",
+    "lnurl",
+    "auth"
+  ],
+  "author": {
+    "name": "Charles Hill",
+    "email": "chill@degreesofzero.com"
+  },
+  "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://degreesofzero.com/donate.html?project=passport-lnurl-auth"
+  },
+  "bugs": {
+    "url": "https://github.com/chill117/passport-lnurl-auth/issues"
+  },
+  "homepage": "https://github.com/chill117/passport-lnurl-auth#readme",
+  "dependencies": {
+    "handlebars": "4.7.6",
+    "lnurl": "0.5.1",
+    "passport-strategy": "1.0.0",
+    "qrcode": "1.4.4",
+    "secp256k1": "3.8.0",
+    "underscore": "1.10.2"
+  },
+  "devDependencies": {
+    "express": "4.17.1",
+    "express-session": "1.17.0",
+    "passport": "0.4.1"
+  }
+}
