@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/chill117/passport-lnurl-auth#readme",
   "dependencies": {
+    "debug": "4.1.1",
     "handlebars": "4.7.6",
     "lnurl": "0.5.1",
     "passport-strategy": "1.0.0",

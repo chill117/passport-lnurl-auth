@@ -6,6 +6,7 @@ A passport strategy for [lnurl-auth](https://github.com/btcontract/lnurl-rfc/blo
 
 * [Installation](#installation)
 * [Usage](#usage)
+	* [Debugging](#debugging)
 	* [Remote Tunneling](#remote-tunneling)
 		* [Using SSH and a VPS](#using-ssh-and-a-vps)
 		* [Using ngrok](#using-ngrok)
@@ -65,6 +66,16 @@ app.get('/login',
 For a complete, working example see the [simple server](https://github.com/chill117/passport-lnurl-auth/blob/master/examples/simple.js) included with this project.
 
 To test the end-to-end login flow with lnurl-auth, see [Remote Tunneling](#remote-tunneling).
+
+
+### Debugging
+
+This module uses the [debug module](https://github.com/visionmedia/debug). To output all debug messages to the console, run your node app with the `DEBUG` environment variable:
+```
+DEBUG=passport-lnurl-auth* node your-app.js
+```
+This will output log messages as well as error messages related to this module.
+
 
 
 ### Remote Tunneling
