@@ -53,8 +53,12 @@ app.get('/login',
 		next();
 	},
 	new LnurlAuth.Middleware({
+		// The externally reachable URL for the lnurl-auth middleware.
+		// It should resolve to THIS endpoint on your server.
 		callbackUrl: 'http://localhost:3000/login',
-		cancelUrl: 'http://localhost:3000'
+		// The URL of the "Cancel" button on the login page.
+		// When set to NULL or some other falsey value, the cancel button will be hidden.
+		cancelUrl: '/'
 	})
 );
 ```
