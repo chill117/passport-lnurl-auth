@@ -1,5 +1,7 @@
 # passport-lnurl-auth
 
+[![Build Status](https://travis-ci.org/chill117/passport-lnurl-auth.svg?branch=master)](https://travis-ci.org/chill117/passport-lnurl-auth)
+
 A passport strategy for [lnurl-auth](https://github.com/btcontract/lnurl-rfc/blob/master/lnurl-auth.md).
 
 * [Installation](#installation)
