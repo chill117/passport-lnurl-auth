@@ -2,19 +2,21 @@ const _ = require('underscore');
 const crypto = require('crypto');
 const http = require('http');
 const lnurl = require('lnurl');
+const {
+	createAuthorizationSignature,
+	generateRandomLinkingKey
+} = lnurl;
 const querystring = require('querystring');
-const secp256k1 = require('secp256k1');
 const url = require('url');
 
 module.exports = {
 
 	doSigning: function(k1, linkingKey) {
-		linkingKey = linkingKey || this.generateLinkingKey();
+		linkingKey = linkingKey || generateRandomLinkingKey();
 		const { pubKey, privKey } = linkingKey;
-		const { signature } = secp256k1.sign(Buffer.from(k1, 'hex'), privKey);
-		const derEncodedSignature = secp256k1.signatureExport(signature);
+		const sig = createAuthorizationSignature(k1, privKey);
 		return {
-			sig: derEncodedSignature.toString('hex'),
+			sig: sig.toString('hex'),
 			key: pubKey.toString('hex'),
 		};
 	},
@@ -39,24 +41,6 @@ module.exports = {
 			secret = params.k1;
 		}
 		return secret;
-	},
-
-	generateLinkingKey: function() {
-		let privKey;
-		do {
-			privKey = crypto.randomBytes(32);
-		} while (!secp256k1.privateKeyVerify(privKey))
-		const pubKey = Buffer.from(secp256k1.publicKeyCreate(privKey));
-		return {
-			pubKey: pubKey,
-			privKey: privKey,
-		};
-	},
-
-	generateRandomBytes: function(numBytes, encoding) {
-		numBytes = numBytes || 32;
-		encoding = encoding || 'hex';
-		return crypto.randomBytes(numBytes).toString(encoding);
 	},
 
 	request: function(method, requestOptions, cb) {

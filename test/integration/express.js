@@ -3,10 +3,11 @@ const { expect } = require('chai');
 const express = require('express');
 const helpers = require('../helpers');
 const lnurl = require('lnurl');
+const { generateRandomLinkingKey } = lnurl;
+const { generateRandomByteString } = require('lnurl/lib');
 const LnurlAuth = require('../../index');
 const passport = require('passport');
 const querystring = require('querystring');
-const secp256k1 = require('secp256k1');
 const session = require('express-session');
 const url = require('url');
 
@@ -21,7 +22,7 @@ describe('express', function() {
 			url: 'http://localhost:3000',
 		};
 		app.use(session({
-			secret: helpers.generateRandomBytes(20, 'base64'),
+			secret: generateRandomByteString(20, 'base64'),
 			resave: true,
 			saveUninitialized: true,
 		}));
@@ -194,7 +195,7 @@ describe('express', function() {
 			{
 				description: 'unknown secret',
 				params: function() {
-					const unknownSecret = helpers.generateRandomBytes(32, 'hex');
+					const unknownSecret = generateRandomByteString(32, 'hex');
 					const { sig, key } = helpers.doSigning(unknownSecret);
 					return { k1: unknownSecret , key, sig };
 				},
@@ -216,8 +217,8 @@ describe('express', function() {
 			{
 				description: 'invalid signature',
 				params: function() {
-					const linkingKey1 = helpers.generateLinkingKey();
-					const linkingKey2 = helpers.generateLinkingKey();
+					const linkingKey1 = generateRandomLinkingKey();
+					const linkingKey2 = generateRandomLinkingKey();
 					const { sig } = helpers.doSigning(k1, linkingKey1);
 					const key = linkingKey2.pubKey.toString('hex');
 					return { k1, key, sig };
