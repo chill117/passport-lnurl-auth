@@ -34,7 +34,7 @@
   "dependencies": {
     "debug": "4.2.0",
     "handlebars": "4.7.6",
-    "lnurl": "0.9.0",
+    "lnurl": "0.10.0",
     "passport-strategy": "1.0.0",
     "qrcode": "1.4.4",
     "underscore": "1.11.0"
