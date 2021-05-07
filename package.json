@@ -37,7 +37,7 @@
     "lnurl": "0.10.0",
     "passport-strategy": "1.0.0",
     "qrcode": "1.4.4",
-    "underscore": "1.11.0"
+    "underscore": "1.12.1"
   },
   "devDependencies": {
     "chai": "4.2.0",
