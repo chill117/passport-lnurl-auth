@@ -1,6 +1,6 @@
 {
   "name": "passport-lnurl-auth",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Passport strategy that uses lnurl-auth",
   "main": "index.js",
   "scripts": {
