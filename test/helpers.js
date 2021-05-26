@@ -2,10 +2,7 @@ const _ = require('underscore');
 const crypto = require('crypto');
 const http = require('http');
 const lnurl = require('lnurl');
-const {
-	createAuthorizationSignature,
-	generateRandomLinkingKey
-} = lnurl;
+const { createAuthorizationSignature, generateRandomLinkingKey } = require('lnurl/lib');
 const querystring = require('querystring');
 const url = require('url');
 
