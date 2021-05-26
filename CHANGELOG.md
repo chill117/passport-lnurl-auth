@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.2.2:
+  * Updated dependencies
+  * Create, use isolated handlebars to avoid conflicts
 * v1.2.1:
   * Updated dependencies
 * v1.2.0:
