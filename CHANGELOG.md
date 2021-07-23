@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.3.0:
+  * Updated dependencies
+  * New option for Middleware - "uriSchemaPrefix"
 * v1.2.2:
   * Updated dependencies
   * Create, use isolated handlebars to avoid conflicts

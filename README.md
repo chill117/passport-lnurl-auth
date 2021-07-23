@@ -59,7 +59,17 @@ app.get('/login',
 		callbackUrl: 'http://localhost:3000/login',
 		// The URL of the "Cancel" button on the login page.
 		// When set to NULL or some other falsey value, the cancel button will be hidden.
-		cancelUrl: '/'
+		cancelUrl: '/',
+		// The URI schema prefix used before the encoded LNURL.
+		// e.g. "lightning:" or "LIGHTNING:" or "" (empty-string)
+		uriSchemaPrefix: 'LIGHTNING:',
+		// Options object passed to QRCode.toDataURL(data, options) - for further details:
+		// https://github.com/soldair/node-qrcode/#qr-code-options
+		qrcode: {
+			errorCorrectionLevel: 'L',
+			margin: 2,
+			type: 'image/png',
+		},
 	})
 );
 ```

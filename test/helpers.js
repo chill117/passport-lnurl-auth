@@ -24,8 +24,8 @@ module.exports = {
 	},
 
 	extractEncodedFromLoginPageHtml: function(html) {
-		const match = html.match(new RegExp('<a id="qrcode" href="lightning:([a-z0-9]+)">'));
-		return match && match[1] || null;
+		const match = html.match(new RegExp('<a id="qrcode" href="(lightning:|LIGHTNING:)?([a-zA-Z0-9]+)">'));
+		return match && match[2] || null;
 	},
 
 	extractSecretFromLoginPageHtml: function(html) {
