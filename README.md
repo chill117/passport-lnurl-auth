@@ -60,6 +60,12 @@ app.get('/login',
 		// The URL of the "Cancel" button on the login page.
 		// When set to NULL or some other falsey value, the cancel button will be hidden.
 		cancelUrl: '/',
+		// Instruction text shown below the title on the login page:
+		instruction: 'Scan the QR code to login',
+		// The number of seconds to wait before refreshing the login page:
+		refreshSeconds: 5,
+		// The title of the login page:
+		title: 'Login with lnurl-auth',
 		// The URI schema prefix used before the encoded LNURL.
 		// e.g. "lightning:" or "LIGHTNING:" or "" (empty-string)
 		uriSchemaPrefix: 'LIGHTNING:',

@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.4.0:
+  * Added new middleware options: instruction, title, refreshSeconds
+  * Added footer info on login page
 * v1.3.0:
   * Updated dependencies
   * New option for Middleware - "uriSchemaPrefix"
