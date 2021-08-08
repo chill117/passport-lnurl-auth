@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login with lnurl-auth</title>
+	<title>{{title}}</title>
 	<style>
 		html, body {
 			width: 100%;
@@ -12,6 +12,20 @@
 			font-family: sans;
 			background: #222;
 			margin: 0;
+		}
+		a {
+			color: #c95b59;
+			font-weight: 400;
+			text-decoration: none;
+			border-bottom: .1rem dashed rgba(206, 94, 92, 0.48);
+		}
+		a:hover,
+		a:active {
+			color: #c95b59;
+		}
+		a:hover {
+			text-decoration: none;
+			border-bottom-style: solid;
 		}
 		h1 {
 			margin: 0 0 .5rem 0;
@@ -55,8 +69,11 @@
 			padding: .4rem .8rem;
 		}
 		a.button,
+		a.button:active,
 		a.button:hover {
+			color: #fff;
 			text-decoration: none;
+			border: none;
 		}
 		.button:hover {
 			opacity: 1;
@@ -65,20 +82,40 @@
 			display: block;
 			margin-top: 1rem;
 		}
+		#footer {
+			margin-top: 1rem;
+		}
+		#footer p {
+			margin: .5rem 0 0 0;
+		}
+		@media screen and (max-width: 540px) {
+			h1 {
+				font-size:  1.7rem;
+			}
+		}
 	</style>
-	<meta http-equiv="refresh" content="2">
+	<meta http-equiv="refresh" content="{{refreshSeconds}}">
 </head>
 <body>
 
 	<div id="content">
 		<div class="wrap">
-			<h1>Login with lnurl-auth</h1>
-			<p>Scan the QR code with an app that supports lnurl-auth</p>
+			<h1>{{title}}</h1>
+			<p>{{instruction}}</p>
 			<a id="qrcode" href="{{href}}"><img src="{{dataUri}}"></a>
 			<div id="buttons">
 				{{#if cancelUrl}}
 				<a href="{{cancelUrl}}" class="button">Cancel</a>
 				{{/if}}
+			</div>
+			<div id="footer">
+				<div class="about">
+					<p>This page uses the lnurl-auth protocol.</p>
+					<p>See <a href="https://github.com/fiatjaf/awesome-lnurl#wallets">list of apps</a> that support it.</p>
+				</div>
+				<div class="help">
+					<p><a href="https://github.com/chill117/passport-lnurl-auth/issues">Report a problem</a></p>
+				</div>
 			</div>
 		</div>
 	</div>
