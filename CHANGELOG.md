@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.4.1:
+  * Updated dependencies
 * v1.4.0:
   * Added new middleware options: instruction, title, refreshSeconds
   * Added footer info on login page
