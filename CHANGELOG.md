@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.4.2:
+  * Updated dependencies
 * v1.4.1:
   * Updated dependencies
 * v1.4.0:
