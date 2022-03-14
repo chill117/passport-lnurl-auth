@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.4.3:
+  * Updated dependencies, removed chai and underscore
 * v1.4.2:
   * Updated dependencies
 * v1.4.1:
