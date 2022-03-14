@@ -1,5 +1,4 @@
-const _ = require('underscore');
-const { expect } = require('chai');
+const assert = require('assert');
 const express = require('express');
 const helpers = require('../helpers');
 const lnurl = require('lnurl');
@@ -75,100 +74,75 @@ describe('express', function() {
 		app.server.close(done);
 	});
 
-	it('login page (html)', function(done) {
-		helpers.request('get', {
-			url: app.config.url + '/login',
+	it('login page (html)', function() {
+		return helpers.request('get', {
+			url:`${app.config.url}/login`,
 			qs: {},
-		}, function(error, response, body) {
-			if (error) return done(error);
-			try {
-				expect(response.headers['content-type']).to.not.be.undefined;
-				expect(response.headers['content-type']).to.have.string('text/html');
-				expect(body).to.have.string('<html');
-				expect(body).to.have.string('<head');
-				expect(body).to.have.string('Login with lnurl-auth');
-				const encoded = helpers.extractEncodedFromLoginPageHtml(body);
-				const dataUri = helpers.extractDataUriFromLoginPageHtml(body);
-				expect(dataUri.length > 250);
-				const decoded = lnurl.decode(encoded);
-				const parsedUrl = url.parse(decoded);
-				expect(parsedUrl.hostname).to.equal(app.config.host);
-				expect(parseInt(parsedUrl.port)).to.equal(app.config.port);
-				const params = querystring.parse(parsedUrl.query);
-				expect(params.tag).to.equal('login');
-				expect(params.k1).to.not.be.undefined;
-			} catch (error) {
-				return done(error);
-			}
-			done();
+		}).then(result => {
+			const { body, response } = result;
+			assert.ok(response.headers['content-type']);
+			assert.ok(response.headers['content-type'].indexOf('text/html') !== -1);
+			assert.ok(body.indexOf('<html') !== -1);
+			assert.ok(body.indexOf('<head') !== -1);
+			assert.ok(body.indexOf('Login with lnurl-auth') !== -1);
+			const encoded = helpers.extractEncodedFromLoginPageHtml(body);
+			const dataUri = helpers.extractDataUriFromLoginPageHtml(body);
+			assert.ok(dataUri.length > 250);
+			const decoded = lnurl.decode(encoded);
+			const parsedUrl = url.parse(decoded);
+			assert.strictEqual(parsedUrl.hostname, app.config.host);
+			assert.strictEqual(parseInt(parsedUrl.port), app.config.port);
+			const params = querystring.parse(parsedUrl.query);
+			assert.strictEqual(params.tag, 'login');
+			assert.ok(params.k1);
 		});
 	});
 
 	describe('whole login process', function() {
 
 		let k1, cookie;
-		before(function(done) {
-			helpers.request('get', {
-				url: app.config.url + '/login',
-			}, function(error, response, body) {
-				if (error) return done(error);
-				try {
-					expect(response.headers['set-cookie'][0]).to.have.string('connect.sid=');
-					cookie = response.headers['set-cookie'][0].split(';')[0];
-					k1 = helpers.extractSecretFromLoginPageHtml(body);
-				} catch (error) {
-					return done(error);
-				}
-				done();
+		before(function() {
+			return helpers.request('get', {
+				url:`${app.config.url}/login`,
+			}).then(result => {
+				const { body, response } = result;
+				assert.ok(response.headers['set-cookie'][0].indexOf('connect.sid=') !== -1);
+				cookie = response.headers['set-cookie'][0].split(';')[0];
+				k1 = helpers.extractSecretFromLoginPageHtml(body);
 			});
 		});
 
-		before(function(done) {
+		before(function() {
 			const { sig, key } = helpers.doSigning(k1);
 			const params = { k1, key, sig };
-			helpers.request('get', {
-				url: app.config.url + '/login',
+			return helpers.request('get', {
+				url:`${app.config.url}/login`,
 				qs: params,
 				json: true,
-			}, function(error, response, body) {
-				if (error) return done(error);
-				try {
-					expect(body).to.deep.equal({ status: 'OK' });
-				} catch (error) {
-					return done(error);
-				}
-				done();
+			}).then(result => {
+				const { body } = result;
+				assert.deepStrictEqual(body, { status: 'OK' });
 			});
 		});
 
-		it('logged-in session', function(done) {
-			helpers.request('get', {
-				url: app.config.url + '/',
+		it('logged-in session', function() {
+			return helpers.request('get', {
+				url:`${app.config.url}/`,
 				headers: { cookie },
-			}, function(error, response, body) {
-				if (error) return done(error);
-				try {
-					expect(response.statusCode).to.equal(200);
-					expect(body).to.equal('AUTHENTICATED');
-				} catch (error) {
-					return done(error);
-				}
-				done();
+			}).then(result => {
+				const { body, response } = result;
+				assert.strictEqual(response.statusCode, 200);
+				assert.strictEqual(body, 'AUTHENTICATED');
 			});
 		});
 
-		it('logged-out (without session cookie)', function(done) {
-			helpers.request('get', {
-				url: app.config.url + '/',
-			}, function(error, response, body) {
-				if (error) return done(error);
-				try {
-					expect(response.statusCode).to.equal(401);
-					expect(body).to.equal('NOT AUTHENTICATED');
-				} catch (error) {
-					return done(error);
-				}
-				done();
+		it('logged-out (without session cookie)', function() {
+			return helpers.request('get', {
+				url:`${app.config.url}/`,
+			}).then(result => {
+				const { body, response } = result;
+				assert.strictEqual(response.statusCode, 401);
+				assert.strictEqual(body, 'NOT AUTHENTICATED');
 			});
 		})
 	});
@@ -176,17 +150,12 @@ describe('express', function() {
 	describe('/login?k1=SECRET&sig=SIGNATURE&key=LINKINGPUBKEY', function() {
 
 		let k1;
-		before(function(done) {
-			helpers.request('get', {
-				url: app.config.url + '/login',
-			}, function(error, response, body) {
-				if (error) return done(error);
-				try {
-					k1 = helpers.extractSecretFromLoginPageHtml(body);
-				} catch (error) {
-					return done(error);
-				}
-				done();
+		before(function() {
+			return helpers.request('get', {
+				url:`${app.config.url}/login`,
+			}).then(result => {
+				const { body, response } = result;
+				k1 = helpers.extractSecretFromLoginPageHtml(body);
 			});
 		});
 
@@ -229,12 +198,14 @@ describe('express', function() {
 			},
 		];
 
-		_.each(['k1', 'key', 'sig'], function(requiredField) {
+		['k1', 'key', 'sig'].forEach(function(requiredField) {
 			tests.push({
 				description: `Missing "${requiredField}"`,
 				params: function() {
 					const { sig, key } = helpers.doSigning(k1);
-					return _.omit({ k1, key, sig }, requiredField);
+					let params = { k1, key, sig };
+					delete params[requiredField];
+					return params;
 				},
 				expected: {
 					status: 'ERROR',
@@ -243,21 +214,16 @@ describe('express', function() {
 			});
 		});
 
-		_.each(tests, function(test) {
-			it(test.description, function(done) {
-				const params = _.isFunction(test.params) ? test.params.call(this) : test.params;
-				helpers.request('get', {
-					url: app.config.url + '/login',
+		tests.forEach(function(test) {
+			it(test.description, function() {
+				const params = typeof test.params === 'function' ? test.params.call(this) : test.params;
+				return helpers.request('get', {
+					url:`${app.config.url}/login`,
 					qs: params,
 					json: true,
-				}, function(error, response, body) {
-					if (error) return done(error);
-					try {
-						expect(body).to.deep.equal(test.expected);
-					} catch (error) {
-						return done(error);
-					}
-					done();
+				}).then(result => {
+					const { body } = result;
+					assert.deepStrictEqual(body, test.expected);
 				});
 			});
 		});

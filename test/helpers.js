@@ -1,5 +1,3 @@
-const _ = require('underscore');
-const crypto = require('crypto');
 const http = require('http');
 const lnurl = require('lnurl');
 const { createAuthorizationSignature, generateRandomLinkingKey } = require('lnurl/lib');
@@ -40,35 +38,38 @@ module.exports = {
 		return secret;
 	},
 
-	request: function(method, requestOptions, cb) {
-		const done = _.once(cb);
-		const parsedUrl = url.parse(requestOptions.url);
-		let options = _.extend({}, requestOptions || {}, {
-			method: method.toUpperCase(),
-			hostname: parsedUrl.hostname,
-			port: parsedUrl.port,
-			path: parsedUrl.path,
-		});
-		if (requestOptions.qs) {
-			options.path += '?' + querystring.stringify(requestOptions.qs);
-		}
-		const req = http.request(options, function(res) {
-			let body = '';
-			res.on('data', function(buffer) {
-				body += buffer.toString();
+	request: function(method, requestOptions) {
+		return Promise.resolve().then(() => {
+			const parsedUrl = url.parse(requestOptions.url);
+			let options = Object.assign({}, requestOptions || {}, {
+				method: method.toUpperCase(),
+				hostname: parsedUrl.hostname,
+				port: parsedUrl.port,
+				path: parsedUrl.path,
 			});
-			res.on('end', function() {
-				if (requestOptions.json) {
-					try {
-						body = JSON.parse(body);
-					} catch (error) {
-						return done(error);
-					}
-				}
-				done(null, res, body);
+			if (requestOptions.qs) {
+				options.path += '?' + querystring.stringify(requestOptions.qs);
+			}
+			return new Promise((resolve, reject) => {
+				const req = http.request(options, response => {
+					let body = '';
+					response.on('data', buffer => {
+						body += buffer.toString();
+					});
+					response.on('end', () => {
+						if (requestOptions.json) {
+							try {
+								body = JSON.parse(body);
+							} catch (error) {
+								return reject(error);
+							}
+						}
+						resolve({ body, response });
+					});
+				});
+				req.once('error', reject);
+				req.end();
 			});
 		});
-		req.once('error', done);
-		req.end();
 	},
 };
