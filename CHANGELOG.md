@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.5.0:
+  * New middleware option: loginTemplateFilePath - can be used to render a custom login page
 * v1.4.3:
   * Updated dependencies, removed chai and underscore
 * v1.4.2:
