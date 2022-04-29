@@ -62,6 +62,8 @@ app.get('/login',
 		cancelUrl: '/',
 		// Instruction text shown below the title on the login page:
 		instruction: 'Scan the QR code to login',
+		// The file path to the login.html template:
+		loginTemplateFilePath: path.join(__dirname, '..', 'templates', 'login.html'),
 		// The number of seconds to wait before refreshing the login page:
 		refreshSeconds: 5,
 		// The title of the login page:

@@ -4,8 +4,9 @@
   "description": "Passport strategy that uses lnurl-auth",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test:integration",
-    "test:integration": "./node_modules/.bin/mocha ./test/integration/*.js"
+    "test": "npm run test:integration ; npm run test:unit",
+    "test:integration": "./node_modules/.bin/mocha --recursive ./test/integration",
+    "test:unit": "./node_modules/.bin/mocha --recursive ./test/unit"
   },
   "repository": {
     "type": "git",
