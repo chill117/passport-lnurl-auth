@@ -33,14 +33,14 @@
   },
   "homepage": "https://github.com/chill117/passport-lnurl-auth#readme",
   "dependencies": {
-    "debug": "4.3.3",
+    "debug": "4.3.4",
     "handlebars": "4.7.7",
-    "lnurl": "0.21.0",
+    "lnurl": "0.24.1",
     "passport-strategy": "1.0.0",
     "qrcode": "1.5.0"
   },
   "devDependencies": {
-    "express": "4.17.3",
+    "express": "4.18.0",
     "express-session": "1.17.2",
     "mocha": "9.2.2",
     "passport": "0.5.2"
