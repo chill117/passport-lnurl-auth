@@ -35,14 +35,14 @@
   "dependencies": {
     "debug": "4.3.4",
     "handlebars": "4.7.7",
-    "lnurl": "0.24.1",
+    "lnurl": "0.24.2",
     "passport-strategy": "1.0.0",
-    "qrcode": "1.5.0"
+    "qrcode": "1.5.1"
   },
   "devDependencies": {
-    "express": "4.18.0",
-    "express-session": "1.17.2",
-    "mocha": "9.2.2",
-    "passport": "0.5.2"
+    "express": "4.18.1",
+    "express-session": "1.17.3",
+    "mocha": "10.0.0",
+    "passport": "0.6.0"
   }
 }

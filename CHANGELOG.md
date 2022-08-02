@@ -1,5 +1,7 @@
 # Changelog
 
+* TBD:
+  * Updated dependencies
 * v1.5.0:
   * New middleware option: loginTemplateFilePath - can be used to render a custom login page
 * v1.4.3:
