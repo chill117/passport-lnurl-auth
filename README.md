@@ -145,7 +145,7 @@ Be sure to replace `VPS_IP_ADDRESS` with the actual IP address of your server.
 
 If you don't have access to your own VPS, [ngrok](https://ngrok.com/) is another possible solution. Follow the installation instructions on the project's website before continuing here. Once you have ngrok installed, you can continue with the instructions here.
 
-To create an HTTP tunnel to the toolbox's LNURL server:
+To create an HTTP tunnel:
 ```bash
 ngrok http -region eu 3000
 ```
