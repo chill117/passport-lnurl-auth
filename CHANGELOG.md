@@ -1,6 +1,7 @@
 # Changelog
 
-* TBD:
+* v1.5.1:
+  * Fix issue [#6](https://github.com/chill117/passport-lnurl-auth/issues/6) - e.g. when user authenticates with GetAlby or other ext.
   * Updated dependencies
 * v1.5.0:
   * New middleware option: loginTemplateFilePath - can be used to render a custom login page
