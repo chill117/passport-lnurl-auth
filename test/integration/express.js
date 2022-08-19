@@ -146,6 +146,46 @@ describe('express', function() {
 		})
 	});
 
+	describe('shared context (e.g. via browser extension)', function() {
+
+		let k1, cookie;
+		before(function() {
+			return this.helpers.request('get', {
+				url:`${app.config.url}/login`,
+			}).then(result => {
+				const { body, response } = result;
+				assert.ok(response.headers['set-cookie'][0].indexOf('connect.sid=') !== -1);
+				cookie = response.headers['set-cookie'][0].split(';')[0];
+				k1 = this.helpers.extractSecretFromLoginPageHtml(body);
+			});
+		});
+
+		before(function() {
+			const { sig, key } = this.helpers.doSigning(k1);
+			const query = { k1, key, sig };
+			return this.helpers.request('get', {
+				url:`${app.config.url}/login`,
+				qs: query,
+				// Shared context = cookies are sent during the lnurl-auth flow:
+				headers: { cookie },
+			}).then(result => {
+				const { body } = result;
+				assert.deepStrictEqual(body, { status: 'OK' });
+			});
+		});
+
+		it('should be logged-in', function() {
+			return this.helpers.request('get', {
+				url:`${app.config.url}/`,
+				headers: { cookie },
+			}).then(result => {
+				const { body, response } = result;
+				assert.strictEqual(response.statusCode, 200);
+				assert.strictEqual(body, 'AUTHENTICATED');
+			});
+		});
+	});
+
 	describe('/login?k1=SECRET&sig=SIGNATURE&key=LINKINGPUBKEY', function() {
 
 		let k1;
