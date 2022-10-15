@@ -147,7 +147,7 @@ If you don't have access to your own VPS, [ngrok](https://ngrok.com/) is another
 
 To create an HTTP tunnel:
 ```bash
-ngrok http -region eu 3000
+ngrok http --region eu 3000
 ```
 You should see something like the following:
 
