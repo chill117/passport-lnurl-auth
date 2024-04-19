@@ -56,7 +56,7 @@ describe('express', function() {
 				next();
 			},
 			new LnurlAuth.Middleware({
-				callbackUrl: app.config.url + '/login',
+				callbackUrl: `${app.config.url}/login`,
 				cancelUrl: app.config.url
 			})
 		);
@@ -281,7 +281,7 @@ describe('express', function() {
 					next();
 				},
 				new LnurlAuth.Middleware({
-					callbackUrl: app.config.url + '/login',
+					callbackUrl: `${app.config.url}/login`,
 					loginTemplateFilePath: path.join(__dirname, '..', 'templates', 'login.html'),
 				})
 			);

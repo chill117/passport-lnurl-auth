@@ -71,6 +71,11 @@ app.get('/login',
 		// The URI schema prefix used before the encoded LNURL.
 		// e.g. "lightning:" or "LIGHTNING:" or "" (empty-string)
 		uriSchemaPrefix: 'LIGHTNING:',
+		// Use your own custom session store abstraction to get/save sessions with corresponding k1.
+		// This is useful in the case of "serverless" environments.
+		// See lib/stores/memory.js for implementation details.
+		// If NULL, the default MemoryStore will be used.
+		store: null,
 		// Options object passed to QRCode.toDataURL(data, options) - for further details:
 		// https://github.com/soldair/node-qrcode/#qr-code-options
 		qrcode: {

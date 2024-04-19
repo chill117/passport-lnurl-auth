@@ -12,7 +12,7 @@ const config = {
 };
 
 if (!config.url) {
-	config.url = 'http://' + config.host + ':' + config.port;
+	config.url = `http://${config.host}:${config.port}`;
 }
 
 app.use(session({
@@ -64,13 +64,13 @@ app.get('/login',
 		next();
 	},
 	new LnurlAuth.Middleware({
-		callbackUrl: config.url + '/login',
+		callbackUrl: `${config.url}/login`,
 		cancelUrl: config.url
 	})
 );
 
 const server = app.listen(config.port, config.host, function() {
-	console.log('Server listening at ' + config.url);
+	console.log(`Server listening at ${config.url}`);
 });
 
 process.on('uncaughtException', error => {
