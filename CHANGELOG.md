@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.6.0:
+  * New "store" middleware option to use custom session store get/save abstraction
+  * Updated dependencies
 * v1.5.1:
   * Fix issue [#6](https://github.com/chill117/passport-lnurl-auth/issues/6) - e.g. when user authenticates with GetAlby or other ext.
   * Updated dependencies
