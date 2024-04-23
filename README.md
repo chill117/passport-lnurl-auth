@@ -1,6 +1,6 @@
 # passport-lnurl-auth
 
-![Build Status](https://github.com/chill117/passport-lnurl-auth/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/chill117/passport-lnurl-auth/actions/workflows/tests.yml/badge.svg)
 
 A passport strategy for [lnurl-auth](https://github.com/btcontract/lnurl-rfc/blob/master/lnurl-auth.md).
 
